@@ -83,7 +83,7 @@
         <ImageView
             android:id="@+id/v_left_card"
             android:layout_width="0dp"
-            android:layout_height="194dp"
+            android:layout_height="148dp"
             android:layout_weight="1"
             android:scaleType="centerInside"
             android:src="@drawable/back_card" />
@@ -91,7 +91,7 @@
         <ImageView
             android:id="@+id/v_right_card"
             android:layout_width="0dp"
-            android:layout_height="192dp"
+            android:layout_height="148dp"
             android:layout_weight="1"
             android:scaleType="centerInside"
             android:src="@drawable/back_card" />
