@@ -9,7 +9,7 @@
     tools:context=".Activity_Winner">
 
     <TextView
-        android:id="@+id/t_the_winner"
+        android:id="@+id/winner_LBL"
         android:layout_alignParentTop="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,14 +22,15 @@
         android:textSize="40sp"/>
 
 
+
     <ImageView
-        android:id="@+id/v_player"
-        android:layout_width="102dp"
-        android:layout_height="107dp"
-        android:layout_below="@+id/t_the_winner"
+        android:id="@+id/winner_IMG_player"
+        android:layout_below = "@+id/winner_LBL"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_weight="1"
-        android:scaleType="centerInside" />
+        android:scaleType="centerInside"
+        android:layout_marginTop="20dp" />
 
 </RelativeLayout>
