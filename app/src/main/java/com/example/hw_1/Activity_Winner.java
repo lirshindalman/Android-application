@@ -7,10 +7,13 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import static com.example.hw_1.GameManager.p1;
+import static com.example.hw_1.GameManager.p2;
+
 public class Activity_Winner extends AppCompatActivity {
     private ImageView winner_IMG_player;
     private TextView winner_LBL;
-    public static final String WINNER = "WINNER";
+    public static final String WINNER = "winner";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,12 +23,12 @@ public class Activity_Winner extends AppCompatActivity {
         setContentView(R.layout.activity__winner);
 
         findViews();
-        String winner = getIntent().getStringExtra(WINNER);
+        int winner = getIntent().getIntExtra(WINNER, 0);
 
-        if(winner.equals("boy")){
+        if(winner == p1){
             int boy = getResources().getIdentifier("boy", "drawable", getPackageName());
             winner_IMG_player.setImageResource(boy);
-        }else if(winner.equals("girl")){
+        }else if(winner == p2){
             int girl = getResources().getIdentifier("girl", "drawable", getPackageName());
             winner_IMG_player.setImageResource(girl);
         }

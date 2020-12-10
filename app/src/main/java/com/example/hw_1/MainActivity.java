@@ -15,16 +15,19 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import static com.example.hw_1.GameManager.p1;
+import static com.example.hw_1.GameManager.p2;
+
 public class MainActivity extends AppCompatActivity {
     private ImageView main_IMG_rightCard, main_IMG_leftCard;
     private Button main_BTN_war;
     private TextView main_LBL_leftScore, main_LBL_rightScore;
     private ArrayList <String> allCards = new ArrayList<>();
-    private List<String> leftPlayerCards;
-    private List<String> rightPlayerCards;
+    private List<String> PlayerCards1;
+    private List<String> PlayerCards2;
     private int counter = 0;
-    private int leftScore = 0;
-    private int rightScore = 0;
+    private int playerScore1 = 0;
+    private int playerScore2 = 0;
     private String winner= " ";
     Random r;
 
@@ -33,9 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         findViews();
-        createArray();
         initViews();
 
     }
@@ -59,78 +60,55 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void createArrayByShape(String s){
-        for(int i=2; i<15; i++){
-            allCards.add("card_" + s + i);
-        }
-    }
 
-    private void createArray(){
-        createArrayByShape("a");
-        createArrayByShape("b");
-        createArrayByShape("c");
-        createArrayByShape("d");
-        Collections.shuffle(allCards);
-        leftPlayerCards = allCards.subList(0,26);
-        rightPlayerCards = allCards.subList(26,52);
-    }
-
-
-    private void increaseScore(int leftCard, int rightCard ){
-        if(leftCard > rightCard){
-            leftScore++;
-            main_LBL_leftScore.setText(String.valueOf(leftScore));
-        } else if(rightCard > leftCard){
-            rightScore++;
-            main_LBL_rightScore.setText(String.valueOf(rightScore));
+    private void increaseScore(GameManager manager, int player){
+        if(player == p1){
+            main_LBL_leftScore.setText(String.valueOf(manager.getPlayerScore1()));
+        } else if(player == p2){
+            main_LBL_rightScore.setText(String.valueOf(manager.getPlayerScore2()));
         }else{
-            leftScore++;
-            rightScore++;
-            main_LBL_leftScore.setText(String.valueOf(leftScore));
-            main_LBL_rightScore.setText(String.valueOf(rightScore));
+            main_LBL_leftScore.setText(String.valueOf(manager.getPlayerScore1()));
+            main_LBL_rightScore.setText(String.valueOf(manager.getPlayerScore2()));
         }
     }
 
-    private void checkWinner(){
-        if(leftScore > rightScore)
-            winner = "boy";
-          else
-            winner = "girl";
-    }
+    private void OneRoundOfGame(GameManager manager, int counter){
+        int playerImage1 = getResources().getIdentifier(manager.getPlayerCards2().get(counter), "drawable", getPackageName());
+        main_IMG_rightCard.setImageResource(playerImage1);
 
-    private void OneRoundOfGame(int counter){
-        int rightImage = getResources().getIdentifier(rightPlayerCards.get(counter), "drawable", getPackageName());
-        main_IMG_rightCard.setImageResource(rightImage);
-
-        int leftImage = getResources().getIdentifier(leftPlayerCards.get(counter), "drawable", getPackageName());
-        main_IMG_leftCard.setImageResource(leftImage);
+        int playerImage2 = getResources().getIdentifier(manager.getPlayerCards1().get(counter), "drawable", getPackageName());
+        main_IMG_leftCard.setImageResource(playerImage2);
 
         //update score
-        String s1 = leftPlayerCards.get(counter).substring(6);
-        int leftCard = Integer.parseInt(s1);
+        String s1 = manager.getPlayerCards1().get(counter).substring(6);
+        int playerCard1 = Integer.parseInt(s1);
 
-        String s2 = rightPlayerCards.get(counter).substring(6);
-        int rightCard = Integer.parseInt(s2);
+        String s2 = manager.getPlayerCards2().get(counter).substring(6);
+        int playerCard2 = Integer.parseInt(s2);
 
-        increaseScore(leftCard, rightCard);
+        int player = manager.increaseScore(playerCard1, playerCard2);
+        increaseScore(manager, player);
+
     }
 
     private void game(){
+        GameManager manager = new GameManager();
+        manager.createArray2();
         if(counter<26){
-            OneRoundOfGame(counter);
+            OneRoundOfGame(manager, counter);
             if(counter==25)
                 main_BTN_war.setText("END GAME");
             counter++;
         }
         else{
-            if(leftScore == rightScore){
+            if(manager.getPlayerScore1() == manager.getPlayerScore2()){
                 main_BTN_war.setText("Tie Breaker");
                 r = new Random();
                 int randNumber = r.nextInt(25) + 1;
-                OneRoundOfGame(randNumber);
+                OneRoundOfGame(manager, randNumber);
             }
             else{
-                checkWinner();
+                int winner = manager.checkWinner(manager.getPlayerScore1(), manager.getPlayerScore2());
                 Intent myIntent = new Intent(MainActivity.this, Activity_Winner.class);
                 myIntent.putExtra(Activity_Winner.WINNER, winner);
                 startActivity(myIntent);
