@@ -26,11 +26,11 @@ public class Activity_Winner extends AppCompatActivity {
         int winner = getIntent().getIntExtra(WINNER, 0);
 
         if(winner == p1){
-            int boy = getResources().getIdentifier("boy", "drawable", getPackageName());
-            winner_IMG_player.setImageResource(boy);
-        }else if(winner == p2){
             int girl = getResources().getIdentifier("girl", "drawable", getPackageName());
             winner_IMG_player.setImageResource(girl);
+        }else if(winner == p2){
+            int boy = getResources().getIdentifier("boy", "drawable", getPackageName());
+            winner_IMG_player.setImageResource(boy);
         }
 
 

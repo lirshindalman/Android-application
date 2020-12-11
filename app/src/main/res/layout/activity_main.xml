@@ -49,7 +49,7 @@
 
 
         <TextView
-            android:id="@+id/main_LBL_leftScore"
+            android:id="@+id/main_LBL_score2"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_weight="1"
@@ -58,13 +58,14 @@
             android:textSize="32sp" />
 
         <TextView
-            android:id="@+id/main_LBL_rightScore"
+            android:id="@+id/main_LBL_score1"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="0"
             android:textSize="32sp" />
+
 
 
 
@@ -81,7 +82,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/main_IMG_leftCard"
+            android:id="@+id/main_IMG_card1"
             android:layout_width="0dp"
             android:layout_height="150dp"
             android:layout_weight="1"
@@ -89,7 +90,7 @@
             android:src="@drawable/back_card" />
 
         <ImageView
-            android:id="@+id/main_IMG_rightCard"
+            android:id="@+id/main_IMG_card2"
             android:layout_width="0dp"
             android:layout_height="150dp"
             android:layout_weight="1"
