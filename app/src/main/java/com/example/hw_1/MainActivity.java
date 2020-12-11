@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static com.example.hw_1.GameManager.p1;
 import static com.example.hw_1.GameManager.p2;
@@ -22,24 +25,47 @@ public class MainActivity extends AppCompatActivity {
     private TextView main_LBL_score1, main_LBL_score2;
     private int counter = 0;
     Random r;
+    private Timer carousalTimer;
+    final int DELAY = 500;
+    GameManager manager = new GameManager();
+    MediaPlayer mp;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        GameManager manager = new GameManager();
         findViews();
         initViews(manager);
 
     }
+    private void startCounting(GameManager manager) {
+        carousalTimer = new Timer();
+        carousalTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                       game(manager);
+                    }
+                });
+            }
+        }, 0, DELAY);
+    }
+    private void stopCounting() {
+        carousalTimer.cancel();
+    }
+
 
     private void initViews(GameManager manager) {
         main_BTN_war.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                game(manager);
+                startCounting(manager);
+                main_BTN_war.setEnabled(false);
             }
         });
     }
@@ -80,12 +106,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void game(GameManager manager){
+        playSound(R.raw.snd_tick);
         manager.createArray2();
 
         if(counter<26){
             OneRoundOfGame(manager, counter);
-            if(counter==25)
+            if(counter==25){
+                stopCounting();
                 main_BTN_war.setText("END GAME");
+                main_BTN_war.setEnabled(true);
+            }
+
             counter++;
         }
         else{
@@ -96,13 +127,27 @@ public class MainActivity extends AppCompatActivity {
                 OneRoundOfGame(manager, randNumber);
             }
             else{
+                stopCounting();
                 int winner = manager.checkWinner(manager.getPlayerScore1(), manager.getPlayerScore2());
                 Intent myIntent = new Intent(MainActivity.this, Activity_Winner.class);
                 myIntent.putExtra(Activity_Winner.WINNER, winner);
                 startActivity(myIntent);
+                playSound(R.raw.snd_winner);
                 finish();
             }
         }
+    }
+
+    private void playSound(int rawId) {
+        mp = MediaPlayer.create(this, rawId);
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mp.reset();
+                mp.release();
+            }
+        });
+        mp.start();
     }
 
 }
