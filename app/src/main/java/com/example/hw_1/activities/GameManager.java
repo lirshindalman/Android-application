@@ -1,9 +1,18 @@
-package com.example.hw_1;
+package com.example.hw_1.activities;
 
+
+import android.content.SharedPreferences;
+
+import com.example.hw_1.objects.Record;
+import com.example.hw_1.objects.TopTen;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import android.util.Log;
+import com.google.gson.Gson;
+
 
 public class GameManager {
     public static final int p1 = 1;
@@ -52,7 +61,6 @@ public class GameManager {
     }
 
 
-
     public int increaseScore(int playerCard1, int playerCard2){
         if(playerCard1 > playerCard2){
             playerScore1++;
@@ -84,6 +92,29 @@ public class GameManager {
         return PlayerCards2;
     }
 
+    public TopTen manageTopTen(TopTen currentTT){
+        int winner = checkWinner(getPlayerScore1(), getPlayerScore2());
+        Record recordWinner = null;
+        //need to add map
+        switch (winner)
+        {
+            case 1:
+                if(getPlayerScore1()>currentTT.getMinRecord())
+                    recordWinner = new Record("player1", 0,getPlayerScore1());
+                break;
+            case 2:
+                if(getPlayerScore2()>currentTT.getMinRecord())
+                    recordWinner = new Record("player2", 0,getPlayerScore2());
+                break;
+            default:
+                return currentTT;
+        }
+        Collections.sort(currentTT.getRecords());
+        currentTT.getRecords().remove(9);
+        currentTT.getRecords().add(recordWinner);
+        Collections.sort(currentTT.getRecords());
+        return currentTT;
+    }
 
 
 }

@@ -1,8 +1,9 @@
-package com.example.hw_1;
+package com.example.hw_1.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -12,12 +13,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.hw_1.R;
+import com.example.hw_1.objects.TopTen;
+import com.google.gson.Gson;
+
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static com.example.hw_1.GameManager.p1;
-import static com.example.hw_1.GameManager.p2;
+import static com.example.hw_1.activities.GameManager.p1;
+import static com.example.hw_1.activities.GameManager.p2;
 
 public class MainActivity extends AppCompatActivity {
     private ImageView main_IMG_card2, main_IMG_card1;
@@ -128,6 +133,14 @@ public class MainActivity extends AppCompatActivity {
             }
             else{
                 stopCounting();
+                SharedPreferences prefs = getSharedPreferences("SP_FILE", MODE_PRIVATE);
+                String currentTTJson = prefs.getString("topTenJson", "");//"No name defined" is the default value.
+                TopTen currentTT = new Gson().fromJson(currentTTJson, TopTen.class);
+                String ttJson = new Gson().toJson(manager.manageTopTen(currentTT));
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("topTenJson", ttJson);
+                editor.apply();
+
                 int winner = manager.checkWinner(manager.getPlayerScore1(), manager.getPlayerScore2());
                 Intent myIntent = new Intent(MainActivity.this, Activity_Winner.class);
                 myIntent.putExtra(Activity_Winner.WINNER, winner);

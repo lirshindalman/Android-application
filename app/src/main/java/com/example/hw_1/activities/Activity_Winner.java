@@ -1,4 +1,4 @@
-package com.example.hw_1;
+package com.example.hw_1.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import static com.example.hw_1.GameManager.p1;
-import static com.example.hw_1.GameManager.p2;
+import com.example.hw_1.R;
+
+import static com.example.hw_1.activities.GameManager.p1;
+import static com.example.hw_1.activities.GameManager.p2;
 
 public class Activity_Winner extends AppCompatActivity {
     private ImageView winner_IMG_player;
