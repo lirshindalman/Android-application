@@ -29,7 +29,7 @@ public class Activity_Winner_List extends AppCompatActivity {
         setContentView(R.layout.activity_winners_list);
 
         findViews();
-        initViews();
+//        initViews();
 
         fragment_list = new Fragment_List();
         fragment_list.setCallBack_top(callBack_top);

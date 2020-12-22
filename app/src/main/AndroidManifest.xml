@@ -10,9 +10,20 @@
         android:screenOrientation="landscape"
         android:supportsRtl="true"
         android:theme="@style/Theme.HW_1">
+
+
+        <activity
+            android:name=".activities.Activity_Main">
+        </activity>
+
+        <activity
+            android:name=".activities.Activity_Winner_List">
+        </activity>
+
         <activity android:name=".activities.Activity_Winner">
         </activity>
-        <activity android:name=".activities.MainActivity">
+
+        <activity android:name=".activities.Activity_welcome">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
