@@ -27,15 +27,12 @@ public class Activity_welcome extends AppCompatActivity {
         initViews();
         setImage(R.drawable.cards_background, welcome_IMG_background);
 
-
-
     }
 
     private void findViews(){
         welcome_BTN_start = (Button)findViewById(R.id.welcome_BTN_start);
         welcome_BTN_records = (Button)findViewById(R.id.welcome_BTN_records);
         welcome_IMG_background = (ImageView)findViewById(R.id.welcome_IMG_background);
-
     }
 
     private void initViews() {
