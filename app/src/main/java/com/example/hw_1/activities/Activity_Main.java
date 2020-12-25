@@ -3,19 +3,16 @@ package com.example.hw_1.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.hw_1.R;
-import com.example.hw_1.objects.TopTen;
-import com.google.gson.Gson;
 
 import java.util.Random;
 import java.util.Timer;
@@ -24,10 +21,11 @@ import java.util.TimerTask;
 import static com.example.hw_1.activities.GameManager.p1;
 import static com.example.hw_1.activities.GameManager.p2;
 
-public class MainActivity extends AppCompatActivity {
-    private ImageView main_IMG_card2, main_IMG_card1;
+public class Activity_Main extends AppCompatActivity {
+    private ImageView main_IMG_card2, main_IMG_card1, main_IMG_background;
     private Button main_BTN_war;
     private TextView main_LBL_score1, main_LBL_score2;
+    private ProgressBar main_LBL_progressBar;
     private int counter = 0;
     Random r;
     private Timer carousalTimer;
@@ -47,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void startCounting(GameManager manager) {
+        flag = 1;
         carousalTimer = new Timer();
         carousalTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -69,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         main_BTN_war.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startCounting(manager);
+                startCounting(manager, new Timer());
                 main_BTN_war.setEnabled(false);
             }
         });
@@ -82,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         main_BTN_war = (Button)findViewById(R.id.main_BTN_war);
         main_LBL_score1 = (TextView)findViewById(R.id.main_LBL_score1);
         main_LBL_score2 = (TextView)findViewById(R.id.main_LBL_score2);
+        main_LBL_progressBar = (ProgressBar) findViewById(R.id.main_LBL_progressBar);
     }
 
 
@@ -116,33 +116,36 @@ public class MainActivity extends AppCompatActivity {
 
         if(counter<26){
             OneRoundOfGame(manager, counter);
-            if(counter==25){
+
+
+            if(counter==25){ //last round
                 stopCounting();
                 main_BTN_war.setText("END GAME");
                 main_BTN_war.setEnabled(true);
             }
 
             counter++;
+            main_LBL_progressBar.setProgress(counter);
         }
-        else{
+        else{ // 26 rounds end
             if(manager.getPlayerScore1() == manager.getPlayerScore2()){
                 main_BTN_war.setText("Tie Breaker");
                 r = new Random();
                 int randNumber = r.nextInt(25) + 1;
                 OneRoundOfGame(manager, randNumber);
             }
-            else{
+            else{ // game end
                 stopCounting();
-                SharedPreferences prefs = getSharedPreferences("SP_FILE", MODE_PRIVATE);
-                String currentTTJson = prefs.getString("topTenJson", "");//"No name defined" is the default value.
-                TopTen currentTT = new Gson().fromJson(currentTTJson, TopTen.class);
-                String ttJson = new Gson().toJson(manager.manageTopTen(currentTT));
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("topTenJson", ttJson);
-                editor.apply();
+//                SharedPreferences prefs = getSharedPreferences("SP_FILE", MODE_PRIVATE);
+//                String currentTTJson = prefs.getString("topTenJson", "");//"No name defined" is the default value.
+//                TopTen currentTT = new Gson().fromJson(currentTTJson, TopTen.class);
+//                String ttJson = new Gson().toJson(manager.manageTopTen(currentTT));
+//                SharedPreferences.Editor editor = prefs.edit();
+//                editor.putString("topTenJson", ttJson);
+//                editor.apply();
 
                 int winner = manager.checkWinner(manager.getPlayerScore1(), manager.getPlayerScore2());
-                Intent myIntent = new Intent(MainActivity.this, Activity_Winner.class);
+                Intent myIntent = new Intent(Activity_Main.this, Activity_Winner.class);
                 myIntent.putExtra(Activity_Winner.WINNER, winner);
                 startActivity(myIntent);
                 playSound(R.raw.snd_winner);
@@ -162,5 +165,24 @@ public class MainActivity extends AppCompatActivity {
         });
         mp.start();
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(flag == 1){
+            startCounting(manager);
+        }
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        stopCounting();
+    }
+    private void setImage(int id, ImageView imageView) {
+        Glide
+                .with(this)
+                .load(id)
+                .into(imageView);
+    }
 }

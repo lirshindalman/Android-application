@@ -5,14 +5,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="20dp"
     tools:context=".activities.Activity_welcome">
 
+    <ImageView
+        android:id="@+id/welcome_IMG_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        android:scaleType="center"
+
+
+        />
     <LinearLayout
         android:id="@+id/players"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
         <Button
@@ -20,7 +30,8 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:scaleType="centerInside"
+            android:layout_margin="20dp"
+            android:backgroundTint="@color/black"
             android:text="START"
            />
 
@@ -29,7 +40,9 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:scaleType="centerInside"
+            android:layout_margin="20dp"
+            android:backgroundTint="@color/black"
+
             android:text="RECORDS"
             />
 
