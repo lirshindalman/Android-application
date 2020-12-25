@@ -7,10 +7,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
-    android:padding="20dp"
     tools:context=".activities.Activity_Main">
 
+    <ImageView
+        android:id="@+id/main_IMG_background"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:scaleType="center"
+
+         />
 
     <LinearLayout
         android:id="@+id/players"
@@ -18,8 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-
-
+        android:padding="20dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -87,7 +91,7 @@
             android:layout_height="100dp"
             android:layout_weight="1"
             android:scaleType="centerInside"
-            android:src="@drawable/back_card" />
+            />
 
         <ImageView
             android:id="@+id/main_IMG_card2"
@@ -95,7 +99,7 @@
             android:layout_height="100dp"
             android:layout_weight="1"
             android:scaleType="centerInside"
-            android:src="@drawable/back_card" />
+             />
 
 
     </LinearLayout>

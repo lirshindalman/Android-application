@@ -5,9 +5,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/victory"
     tools:context=".activities.Activity_Winner">
 
+    <ImageView
+        android:id="@+id/winner_IMG_background"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+
+        android:scaleType="center"
+
+        />
     <TextView
         android:id="@+id/winner_LBL"
         android:layout_alignParentTop="true"
@@ -19,7 +26,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:text="THE WINNER IS"
-        android:textSize="40sp"/>
+        android:textSize="30sp"/>
 
 
 
