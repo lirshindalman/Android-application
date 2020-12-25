@@ -46,9 +46,8 @@ public class Record implements Comparable<Record>{
     @Override
     public int compareTo(Record u) {
         if (this.getScore() ==  u.getScore()) {
-            return 0;
+            return 1;
         }
-        return this.getScore()>(u.getScore())? 1 : 0;
-
+        return this.getScore()>(u.getScore())? -1 : 1;
     }
 }

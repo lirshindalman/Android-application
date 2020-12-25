@@ -93,8 +93,12 @@ public class GameManager {
     }
 
     public TopTen manageTopTen(TopTen currentTT){
+
         int winner = checkWinner(getPlayerScore1(), getPlayerScore2());
         Record recordWinner = null;
+        if(currentTT == null){
+            currentTT = new TopTen();
+        }
         //need to add map
         switch (winner)
         {
@@ -109,12 +113,24 @@ public class GameManager {
             default:
                 return currentTT;
         }
+        if(currentTT.getRecords().size() < 10) {
+            currentTT.getRecords().add(recordWinner);
+            Collections.sort(currentTT.getRecords());
+            return currentTT;
+        }
+
         Collections.sort(currentTT.getRecords());
+        //remove the last in top ten
         currentTT.getRecords().remove(9);
+        //add new score to winner
         currentTT.getRecords().add(recordWinner);
         Collections.sort(currentTT.getRecords());
+        //set min and max score
+        currentTT.setMaxRecord(currentTT.getRecords().get(0).getScore());
+        currentTT.setMinRecord(currentTT.getRecords().get(currentTT.getRecords().size()-1).getScore());
         return currentTT;
     }
+
 
 
 }

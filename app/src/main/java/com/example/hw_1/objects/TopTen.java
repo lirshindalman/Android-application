@@ -18,7 +18,6 @@ public class TopTen {
         return records;
     }
 
-
     public TopTen setRecords(ArrayList<Record> records) {
         this.records = records;
         return this;
