@@ -1,24 +1,32 @@
 package com.example.hw_1.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import com.example.hw_1.R;
-
+import android.content.SharedPreferences;
 import androidx.fragment.app.Fragment;
 
 import com.example.hw_1.callbacks.CallBack_Top;
+import com.example.hw_1.objects.TopTen;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
 
 
 public class Fragment_List extends Fragment {
 
-    private TextView list_LBL_title;
-    private Button list_BTN_changeActivity;
+
+    ListView listview;
 
     private CallBack_Top callBack_top;
 
@@ -34,12 +42,34 @@ public class Fragment_List extends Fragment {
         findViews(view);
         initViews();
 
-        refreshList();
+
+
+        
+        SharedPreferences prefs = this.getActivity().getSharedPreferences("SP_FILE_TOP_TEN", Context.MODE_PRIVATE);
+        String currentTTJson = prefs.getString("topTenJson", "");//"No name defined" is the default value.
+        //convert from json to TopTen
+        TopTen currentTT = new Gson().fromJson(currentTTJson, TopTen.class);
+        final ArrayList<String> arrayList=setArry(currentTT);
+
+//Create Adapter
+        ArrayAdapter arrayAdapter=new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,arrayList);
+        
+
+//assign adapter to listview
+        listview.setAdapter(arrayAdapter);
         return view;
     }
 
+    private ArrayList<String> setArry(TopTen topTen) {
+        final ArrayList<String> arrayList = new ArrayList<>();
+        for (int i = 0; i < topTen.getRecords().size(); i++) {
+            String str = i+1 +" - "+topTen.getRecords().get(i).toString();
+            arrayList.add(str);
+        }
+        return arrayList;
+    }
+
     private void initViews() {
-        list_BTN_changeActivity.setOnClickListener(onClickListener);
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -51,13 +81,8 @@ public class Fragment_List extends Fragment {
         }
     };
 
-    public void refreshList() {
-        String date = DateFormat.format("dd.MM.yy\nHH:mm:ss", System.currentTimeMillis()).toString();
-        list_LBL_title.setText(date);
-    }
 
     private void findViews(View view) {
-        list_LBL_title = view.findViewById(R.id.list_LBL_title);
-        list_BTN_changeActivity = view.findViewById(R.id.list_BTN_changeActivity);
+        listview = (ListView) view.findViewById(R.id.listview);
     }
 }

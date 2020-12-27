@@ -41,12 +41,7 @@ public class Activity_Winner_List extends AppCompatActivity {
     }
 
     private void initViews() {
-        main_BTN_updateList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragment_list.refreshList();
-            }
-        });
+
     }
 
     private void findViews() {

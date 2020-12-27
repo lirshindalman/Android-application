@@ -50,4 +50,9 @@ public class Record implements Comparable<Record>{
         }
         return this.getScore()>(u.getScore())? -1 : 1;
     }
+
+    public String toString(){
+        String str = this.getName() + "    score: " + this.getScore();
+        return str;
+    }
 }
