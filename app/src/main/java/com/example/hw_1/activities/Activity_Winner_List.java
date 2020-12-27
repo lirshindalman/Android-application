@@ -59,7 +59,7 @@ public class Activity_Winner_List extends AppCompatActivity {
 
         @Override
         public void addMarkerToMap(double lat, double lon) {
-            fragment_map.addMarker(lat, lon);
+            //fragment_map.addMarker(lat, lon);
         }
     };
 }
