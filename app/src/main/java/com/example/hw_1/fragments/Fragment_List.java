@@ -8,12 +8,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.example.hw_1.R;
 import android.content.SharedPreferences;
+import android.widget.Toast;
+
 import androidx.fragment.app.Fragment;
 
 import com.example.hw_1.callbacks.CallBack_Top;
@@ -26,7 +29,7 @@ import java.util.ArrayList;
 public class Fragment_List extends Fragment {
 
 
-    ListView listview;
+    ListView listView;
 
     private CallBack_Top callBack_top;
 
@@ -56,7 +59,15 @@ public class Fragment_List extends Fragment {
         
 
 //assign adapter to listview
-        listview.setAdapter(arrayAdapter);
+        listView.setAdapter(arrayAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getActivity(),"clicked item:"+i+" "+arrayList.get(i).toString(),Toast.LENGTH_SHORT).show();
+                // need to get map x,y from topTen.getRecords().get(i).getmap()
+            }
+        });
         return view;
     }
 
@@ -83,6 +94,6 @@ public class Fragment_List extends Fragment {
 
 
     private void findViews(View view) {
-        listview = (ListView) view.findViewById(R.id.listview);
+        listView = (ListView) view.findViewById(R.id.listview);
     }
 }
