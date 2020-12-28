@@ -44,7 +44,7 @@
         android:background="#45454545"/>
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/winner_list_BTN_start"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="start new game" />

@@ -1,6 +1,8 @@
 package com.example.hw_1.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,11 +17,8 @@ import com.example.hw_1.fragments.Fragment_Map;
 public class Activity_Winner_List extends AppCompatActivity {
 
 
-    private FrameLayout main_LAY_list;
-    private FrameLayout main_LAY_map;
     private TextView main_LBL_title;
-    private Button main_BTN_updateList;
-
+    private Button winner_list_BTN_start;
     private Fragment_List fragment_list;
     private Fragment_Map fragment_map;
 
@@ -29,7 +28,7 @@ public class Activity_Winner_List extends AppCompatActivity {
         setContentView(R.layout.activity_winners_list);
 
         findViews();
-//        initViews();
+        initViews();
 
         fragment_list = new Fragment_List();
         fragment_list.setCallBack_top(callBack_top);
@@ -41,13 +40,19 @@ public class Activity_Winner_List extends AppCompatActivity {
     }
 
     private void initViews() {
+        winner_list_BTN_start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(Activity_Winner_List.this, Activity_Main.class);
+                startActivity(myIntent);
+            }
+        });
 
     }
 
     private void findViews() {
-        main_LAY_list = findViewById(R.id.main_LAY_list);
-        main_LAY_map = findViewById(R.id.main_LAY_map);
         main_LBL_title = findViewById(R.id.main_LBL_title);
+        winner_list_BTN_start = (Button)findViewById(R.id.winner_list_BTN_start);
     }
 
 
