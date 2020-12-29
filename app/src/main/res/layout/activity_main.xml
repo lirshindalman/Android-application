@@ -86,7 +86,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/main_IMG_card1"
+            android:id="@+id/main_IMG_card2"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_weight="1"
@@ -94,7 +94,7 @@
             />
 
         <ImageView
-            android:id="@+id/main_IMG_card2"
+            android:id="@+id/main_IMG_card1"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_weight="1"
