@@ -1,10 +1,16 @@
 package com.example.hw_1.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +29,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static androidx.core.content.ContextCompat.getSystemService;
 import static com.example.hw_1.activities.GameManager.p1;
 import static com.example.hw_1.activities.GameManager.p2;
 
@@ -35,11 +42,13 @@ public class Activity_Main extends AppCompatActivity {
     Random r;
     private Timer carousalTimer;
     final int DELAY = 200;
+    final int DEFAULT = 0;
     GameManager manager = new GameManager();
     MediaPlayer mp;
-    private  int flag = 0;
-
-
+    private  int flag = DEFAULT;
+    LocationManager locationManager;
+    private double lot = DEFAULT;
+    private double lat = DEFAULT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +60,10 @@ public class Activity_Main extends AppCompatActivity {
         setImage(R.drawable.background, main_IMG_background );
         setImage(R.drawable.back_card, main_IMG_card1);
         setImage(R.drawable.back_card, main_IMG_card2);
-
-
-
+        locationManager = (LocationManager)
+                getSystemService(Context.LOCATION_SERVICE);
     }
+
     private void startCounting(GameManager manager) {
         flag = 1;
         carousalTimer = new Timer();
@@ -123,6 +132,7 @@ public class Activity_Main extends AppCompatActivity {
 
     }
 
+    @SuppressLint("MissingPermission")
     private void game(GameManager manager){
         playSound(R.raw.snd_tick);
         manager.createArray2();
@@ -149,6 +159,17 @@ public class Activity_Main extends AppCompatActivity {
             }
             else{ // game end
                 stopCounting();
+                LocationListener locationListener = new LocationListener() {
+                    @Override
+                    public void onLocationChanged(@NonNull Location location) {
+                        double lot = location.getLongitude();
+                        double lat = location.getLatitude();
+                        Log.d("d:      ", "lot: "+lot);
+                        Log.d("d:      ", "lat: "+lat);
+                    }
+                };
+                locationManager.requestLocationUpdates(
+                        LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
 
                 //pull winner top ten from Shared Preferences
                 SharedPreferences prefs = getSharedPreferences("SP_FILE_TOP_TEN", MODE_PRIVATE);
@@ -156,7 +177,7 @@ public class Activity_Main extends AppCompatActivity {
                 //convert from json to TopTen
                 TopTen currentTT = new Gson().fromJson(currentTTJson, TopTen.class);
                 //convert from TopTen to json
-                String ttJson = new Gson().toJson(manager.manageTopTen(currentTT));
+                String ttJson = new Gson().toJson(manager.manageTopTen(currentTT,lot,lat));
                 Log.d("d: ", "json: "+ttJson);
                 //set new winner top ten from Shared Preferences
                 SharedPreferences.Editor editor = prefs.edit();

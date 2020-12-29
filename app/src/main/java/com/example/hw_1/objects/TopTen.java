@@ -1,5 +1,7 @@
 package com.example.hw_1.objects;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 public class TopTen {
@@ -37,5 +39,12 @@ public class TopTen {
 
     public void setMinRecord(int min) {
         this.minRecord= min;
+    }
+
+    public void toStrint(){
+        Log.d("",  " size : "+records.size());
+        for(int i=0 ; i<records.size(); i++){
+            Log.d(""+i,  " score : "+records.get(i).getScore());
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.hw_1.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,12 +34,13 @@ public class Fragment_Map extends Fragment {
             e.printStackTrace();
         }
         mMapView.getMapAsync(new OnMapReadyCallback() {
+            @SuppressLint("MissingPermission")
             @Override
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
                 //googleMap.setMyLocationEnabled(true);
                 //To add marker
-                LatLng sydney = new LatLng(-34, 151);
+                LatLng sydney = new LatLng(-122.084, 37.421998333333335);
                 googleMap.addMarker(new MarkerOptions().position(sydney).title("Title").snippet("Marker Description"));
                 // For zooming functionality
                 CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
@@ -46,6 +48,14 @@ public class Fragment_Map extends Fragment {
             }
         });
         return view;
+    }
+
+    public void addMarker(double lat, double lon) {
+        LatLng sydney = new LatLng(lat, lon);
+        googleMap.addMarker(new MarkerOptions().position(sydney).title("Title").snippet("Marker Description"));
+        // For zooming functionality
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
     @Override
     public void onResume() {

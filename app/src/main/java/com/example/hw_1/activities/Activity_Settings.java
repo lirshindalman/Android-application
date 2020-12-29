@@ -21,8 +21,5 @@ public class Activity_Settings extends AppCompatActivity implements CallBack_Top
     }
 
     @Override
-    public void updateTitle(String str) { }
-
-    @Override
     public void addMarkerToMap(double lat, double lon) { }
 }

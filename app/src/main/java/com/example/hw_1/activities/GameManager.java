@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import android.location.LocationManager;
 import android.util.Log;
 //import com.google.gson.Gson;
 
@@ -92,7 +94,7 @@ public class GameManager {
         return PlayerCards2;
     }
 
-    public TopTen manageTopTen(TopTen currentTT){
+    public TopTen manageTopTen(TopTen currentTT, double lon, double lat){
 
         int winner = checkWinner(getPlayerScore1(), getPlayerScore2());
         Record recordWinner = null;
@@ -103,12 +105,10 @@ public class GameManager {
         switch (winner)
         {
             case 1:
-                if(getPlayerScore1()>currentTT.getMinRecord())
-                    recordWinner = new Record("player1", 0,getPlayerScore1());
+                recordWinner = new Record("player1", lon, lat, getPlayerScore1());
                 break;
             case 2:
-                if(getPlayerScore2()>currentTT.getMinRecord())
-                    recordWinner = new Record("player2", 0,getPlayerScore2());
+                recordWinner = new Record("player2", lon, lat, getPlayerScore2());
                 break;
             default:
                 return currentTT;
@@ -118,13 +118,11 @@ public class GameManager {
             Collections.sort(currentTT.getRecords());
             return currentTT;
         }
-
-        Collections.sort(currentTT.getRecords());
-        //remove the last in top ten
-        currentTT.getRecords().remove(9);
         //add new score to winner
         currentTT.getRecords().add(recordWinner);
         Collections.sort(currentTT.getRecords());
+        //remove the last in top ten
+        currentTT.getRecords().remove(currentTT.getRecords().size()-1);
         //set min and max score
         currentTT.setMaxRecord(currentTT.getRecords().get(0).getScore());
         currentTT.setMinRecord(currentTT.getRecords().get(currentTT.getRecords().size()-1).getScore());

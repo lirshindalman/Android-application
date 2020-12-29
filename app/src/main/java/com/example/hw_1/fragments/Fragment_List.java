@@ -28,8 +28,9 @@ import java.util.ArrayList;
 
 public class Fragment_List extends Fragment {
 
-
     ListView listView;
+    double mapLat;
+    double mapLon;
 
     private CallBack_Top callBack_top;
 
@@ -45,9 +46,6 @@ public class Fragment_List extends Fragment {
         findViews(view);
         initViews();
 
-
-
-        
         SharedPreferences prefs = this.getActivity().getSharedPreferences("SP_FILE_TOP_TEN", Context.MODE_PRIVATE);
         String currentTTJson = prefs.getString("topTenJson", "");//"No name defined" is the default value.
         //convert from json to TopTen
@@ -65,7 +63,9 @@ public class Fragment_List extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Toast.makeText(getActivity(),"clicked item:"+i+" "+arrayList.get(i).toString(),Toast.LENGTH_SHORT).show();
-                // need to get map x,y from topTen.getRecords().get(i).getmap()
+                mapLat = currentTT.getRecords().get(i).getMapLat();
+                mapLon= currentTT.getRecords().get(i).getMapLon();
+                callBack_top.addMarkerToMap(mapLat, mapLon);
             }
         });
         return view;
@@ -82,15 +82,6 @@ public class Fragment_List extends Fragment {
 
     private void initViews() {
     }
-
-    View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (callBack_top != null) {
-                callBack_top.addMarkerToMap(32.07158054366349, 34.81063892756903);
-            }
-        }
-    };
 
 
     private void findViews(View view) {

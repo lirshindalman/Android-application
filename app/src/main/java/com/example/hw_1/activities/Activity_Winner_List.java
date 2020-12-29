@@ -55,16 +55,11 @@ public class Activity_Winner_List extends AppCompatActivity {
         winner_list_BTN_start = (Button)findViewById(R.id.winner_list_BTN_start);
     }
 
-
     private CallBack_Top callBack_top = new CallBack_Top() {
-        @Override
-        public void updateTitle(String str) {
-            main_LBL_title.setText(str);
-        }
 
         @Override
         public void addMarkerToMap(double lat, double lon) {
-            //fragment_map.addMarker(lat, lon);
+            fragment_map.addMarker(lat, lon);
         }
     };
 }

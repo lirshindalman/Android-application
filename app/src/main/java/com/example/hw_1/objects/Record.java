@@ -1,18 +1,19 @@
 package com.example.hw_1.objects;
 
-import android.content.Context;
-
 public class Record implements Comparable<Record>{
 
     private String name = "";
-    private long map = 0;
+    private double mapLon = 0;
+    private double mapLat = 0;
     private int score = 0;
+
 
     public Record() { }
 
-    public Record(String name, long map, int score) {
+    public Record(String name, double mapLon, double mapLat, int score) {
         this.name = name;
-        this.map = map;
+        this.mapLon = mapLon;
+        this.mapLat = mapLat;
         this.score = score;
     }
 
@@ -25,12 +26,16 @@ public class Record implements Comparable<Record>{
         return this;
     }
 
-    public long getMap() {
-        return map;
+    public double getMapLon() {
+        return mapLon;
+    }
+    public double getMapLat() {
+        return mapLat;
     }
 
-    public Record setMap(long date) {
-        this.map = date;
+    public Record setMap(long mapLon,long mapLat ) {
+        this.mapLon = mapLon;
+        this.mapLat = mapLat;
         return this;
     }
 
