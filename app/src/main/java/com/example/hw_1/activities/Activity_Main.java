@@ -166,11 +166,12 @@ public class Activity_Main extends AppCompatActivity {
                     Log.d("d:onLocationChanged", "lat: "+lat);
                 };
 
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
                 Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-                lon = location.getLongitude();
-                lat = location.getLatitude();
+                if (location!= null) {
+                    lon = location.getLongitude();
+                    lat = location.getLatitude();
+                }
                 Log.d("d:locationManager", "lon: "+lon);
                 Log.d("d:locationManager", "lat: "+lat);
 
