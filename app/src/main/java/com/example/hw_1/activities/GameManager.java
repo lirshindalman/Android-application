@@ -113,14 +113,16 @@ public class GameManager {
             default:
                 return currentTT;
         }
-        if(currentTT.getRecords().size() < 10) {
-            currentTT.getRecords().add(recordWinner);
-            Collections.sort(currentTT.getRecords());
-            return currentTT;
-        }
         //add new score to winner
         currentTT.getRecords().add(recordWinner);
         Collections.sort(currentTT.getRecords());
+
+        if(currentTT.getRecords().size() < 10) {
+            currentTT.setMaxRecord(currentTT.getRecords().get(0).getScore());
+            currentTT.setMinRecord(currentTT.getRecords().get(currentTT.getRecords().size()-1).getScore());
+            return currentTT;
+        }
+
         //remove the last in top ten
         currentTT.getRecords().remove(currentTT.getRecords().size()-1);
         //set min and max score

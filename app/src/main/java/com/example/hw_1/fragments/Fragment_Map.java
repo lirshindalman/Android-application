@@ -2,6 +2,7 @@ package com.example.hw_1.fragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,7 @@ public class Fragment_Map extends Fragment {
                 googleMap = mMap;
                 //googleMap.setMyLocationEnabled(true);
                 //To add marker
-                LatLng sydney = new LatLng(-122.084, 37.421998333333335);
+                LatLng sydney = new LatLng(-34, 151);
                 googleMap.addMarker(new MarkerOptions().position(sydney).title("Title").snippet("Marker Description"));
                 // For zooming functionality
                 CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();

@@ -47,8 +47,8 @@ public class Activity_Main extends AppCompatActivity {
     MediaPlayer mp;
     private  int flag = DEFAULT;
     LocationManager locationManager;
-    private double lot = DEFAULT;
-    private double lat = DEFAULT;
+    private double lon ;
+    private double lat ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,25 +159,28 @@ public class Activity_Main extends AppCompatActivity {
             }
             else{ // game end
                 stopCounting();
-                LocationListener locationListener = new LocationListener() {
-                    @Override
-                    public void onLocationChanged(@NonNull Location location) {
-                        double lot = location.getLongitude();
-                        double lat = location.getLatitude();
-                        Log.d("d:      ", "lot: "+lot);
-                        Log.d("d:      ", "lat: "+lat);
-                    }
+                LocationListener locationListener = location -> {
+                    lon = location.getLongitude();
+                    lat = location.getLatitude();
+                    Log.d("d:onLocationChanged", "lon: "+lon);
+                    Log.d("d:onLocationChanged", "lat: "+lat);
                 };
-                locationManager.requestLocationUpdates(
-                        LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
+
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
+                Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+                lon = location.getLongitude();
+                lat = location.getLatitude();
+                Log.d("d:locationManager", "lon: "+lon);
+                Log.d("d:locationManager", "lat: "+lat);
 
                 //pull winner top ten from Shared Preferences
-                SharedPreferences prefs = getSharedPreferences("SP_FILE_TOP_TEN", MODE_PRIVATE);
+                SharedPreferences prefs = getSharedPreferences("SP_FILE_TOPTEN", MODE_PRIVATE);
                 String currentTTJson = prefs.getString("topTenJson", "");//"No name defined" is the default value.
                 //convert from json to TopTen
                 TopTen currentTT = new Gson().fromJson(currentTTJson, TopTen.class);
                 //convert from TopTen to json
-                String ttJson = new Gson().toJson(manager.manageTopTen(currentTT,lot,lat));
+                String ttJson = new Gson().toJson(manager.manageTopTen(currentTT,lon,lat));
                 Log.d("d: ", "json: "+ttJson);
                 //set new winner top ten from Shared Preferences
                 SharedPreferences.Editor editor = prefs.edit();
