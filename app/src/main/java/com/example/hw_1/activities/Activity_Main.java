@@ -176,7 +176,7 @@ public class Activity_Main extends AppCompatActivity {
 //                Log.d("d:locationManager", "lat: "+lat);
 
                 //pull winner top ten from Shared Preferences
-                SharedPreferences prefs = getSharedPreferences("SP_FILE_TOPTEN", MODE_PRIVATE);
+                SharedPreferences prefs = getSharedPreferences("LIR_AVIV", MODE_PRIVATE);
                 String currentTTJson = prefs.getString("topTenJson", "");//"No name defined" is the default value.
                 //convert from json to TopTen
                 TopTen currentTT = new Gson().fromJson(currentTTJson, TopTen.class);

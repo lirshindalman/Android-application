@@ -57,7 +57,7 @@ public class Record implements Comparable<Record>{
     }
 
     public String toString(){
-        String str = this.getName() + "    score: " + this.getScore() +" lon: "+ this.getMapLon() + " lat: "+this.getMapLat();
+        String str = this.getName() + "    score: " + this.getScore(); // +" lon: "+ this.getMapLon() + " lat: "+this.getMapLat();
         return str;
     }
 }
