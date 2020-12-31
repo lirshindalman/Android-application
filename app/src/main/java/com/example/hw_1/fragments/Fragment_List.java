@@ -46,7 +46,7 @@ public class Fragment_List extends Fragment {
         findViews(view);
         initViews();
 
-        SharedPreferences prefs = this.getActivity().getSharedPreferences("SP_FILE_TOP_TEN", Context.MODE_PRIVATE);
+        SharedPreferences prefs = this.getActivity().getSharedPreferences("SP_FILE_TOPTEN", Context.MODE_PRIVATE);
         String currentTTJson = prefs.getString("topTenJson", "");//"No name defined" is the default value.
         //convert from json to TopTen
         ArrayList<String> arrayList = new ArrayList<>();

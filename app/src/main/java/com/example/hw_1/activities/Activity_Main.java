@@ -162,8 +162,8 @@ public class Activity_Main extends AppCompatActivity {
                 LocationListener locationListener = location -> {
                     lon = location.getLongitude();
                     lat = location.getLatitude();
-                    Log.d("d:onLocationChanged", "lon: "+lon);
-                    Log.d("d:onLocationChanged", "lat: "+lat);
+//                    Log.d("d:onLocationChanged", "lon: "+lon);
+//                    Log.d("d:onLocationChanged", "lat: "+lat);
                 };
 
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
@@ -172,11 +172,11 @@ public class Activity_Main extends AppCompatActivity {
                     lon = location.getLongitude();
                     lat = location.getLatitude();
                 }
-                Log.d("d:locationManager", "lon: "+lon);
-                Log.d("d:locationManager", "lat: "+lat);
+//                Log.d("d:locationManager", "lon: "+lon);
+//                Log.d("d:locationManager", "lat: "+lat);
 
                 //pull winner top ten from Shared Preferences
-                SharedPreferences prefs = getSharedPreferences("SP_FILE_TOP_TEN", MODE_PRIVATE);
+                SharedPreferences prefs = getSharedPreferences("SP_FILE_TOPTEN", MODE_PRIVATE);
                 String currentTTJson = prefs.getString("topTenJson", "");//"No name defined" is the default value.
                 //convert from json to TopTen
                 TopTen currentTT = new Gson().fromJson(currentTTJson, TopTen.class);
