@@ -41,7 +41,7 @@ public class Activity_Main extends AppCompatActivity {
     private int counter = 0;
     Random r;
     private Timer carousalTimer;
-    final int DELAY = 200;
+    final int DELAY = 500;
     final int DEFAULT = 0;
     GameManager manager = new GameManager();
     MediaPlayer mp;
